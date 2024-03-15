@@ -15,16 +15,17 @@ main(int argc, char* argv[])
 		printf("failed to  open src file\n");
 		return -1; 
 	}
-	/*
-	int fd_dest = open(argv[2],O_WRONLY);
+	
+	int fd_dest = open(argv[2], O_WRONLY|O_CREAT, 00644);
 	if(fd_dest == -1){
 		printf("failed to  open dest file\n");
 		return -1;
-	}*/
+	}
 	
 	char buffer[10];
 	while(read(fd_src, buffer, sizeof(buffer))){
-		printf("%s",buffer);
+		//printf("%s",buffer);
+		write(fd_dest, buffer, sizeof(buffer));
 	}
 }
 
