@@ -6,7 +6,7 @@ int
 main(int argc, char* argv[])
 {
 	if(argc != 3){
-		printf("[ussage]: ncp SOURCE DEST\n");
+		printf("[ussage]: revncp SOURCE DEST\n");
 		return 0;
 	}
 
@@ -22,9 +22,16 @@ main(int argc, char* argv[])
 		return -1;
 	}
 	
-	char buffer[10];
-	while(read(fd_src, buffer, sizeof(buffer))){
-		write(fd_dest, buffer, sizeof(buffer));
+	char buffer;
+	int filesize = lseek(fd_src, 0, SEEK_END);
+	int offset = filesize;
+	int val;
+	while(val = lseek(fd_src,--offset,SEEK_END)){
+		if(val == 1){
+			return 0;
+		}
+		read(fd_src, &buffer, sizeof(buffer));
+		write(fd_dest, &buffer, sizeof(buffer));
 	}
 }
 
