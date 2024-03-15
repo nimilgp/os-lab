@@ -5,7 +5,7 @@
 int 
 main(int argc, char* argv[])
 {
-	if(argc == 1){
+	if(argc != 3){
 		printf("[ussage]: ncp SOURCE DEST\n");
 		return 0;
 	}
@@ -24,7 +24,6 @@ main(int argc, char* argv[])
 	
 	char buffer[10];
 	while(read(fd_src, buffer, sizeof(buffer))){
-		//printf("%s",buffer);
 		write(fd_dest, buffer, sizeof(buffer));
 	}
 }
