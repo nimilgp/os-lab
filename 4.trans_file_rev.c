@@ -23,15 +23,11 @@ main(int argc, char* argv[])
 	}
 	
 	char buffer;
-	int filesize = lseek(fd_src, 0, SEEK_END);
-	int offset = filesize;
-	int val;
-	while(val = lseek(fd_src,--offset,SEEK_END)){
-		if(val == 1){
-			return 0;
-		}
-		read(fd_src, &buffer, sizeof(buffer));
-		write(fd_dest, &buffer, sizeof(buffer));
+	off_t offset = lseek(fd_src, 0, SEEK_END);
+	ssize_t len;
+	while(lseek(fd_src,offset--,SEEK_SET)+1){
+		len = read(fd_src, &buffer, sizeof(buffer));
+		write(fd_dest, &buffer, len);
 	}
 }
 

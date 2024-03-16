@@ -23,8 +23,11 @@ main(int argc, char* argv[])
 	}
 	
 	char buffer[10];
-	while(read(fd_src, buffer, sizeof(buffer))){
-		write(fd_dest, buffer, sizeof(buffer));
+	ssize_t len =  0;
+	while((len = read(fd_src, buffer, sizeof(buffer)))){
+		write(fd_dest, buffer, len);
 	}
+	close(fd_src);
+	close(fd_dest);
 }
 
